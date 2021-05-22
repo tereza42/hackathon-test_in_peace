@@ -69,10 +69,35 @@ public class TestyHackathon {
         Assertions.assertNotNull(uzivateluvEmail);
     }
 
-    public void prihlaseniExistujicihoUzivatele(String email, String heslo){
-        String prihlasovaciEmail = email;
-        String prihlasovaciHeslo = heslo;
+    @Test
+    public void checkOutMusiFungovat() {
+        prohlizec.navigate().to ("http://czechitas-datestovani-hackathon.cz/cs/");
+        WebElement tlacitkoPolohaHotelu = prohlizec.findElement(By.id("hotel_location"));
+        tlacitkoPolohaHotelu.click();
+        WebElement buttonPozadovanyHotel = prohlizec.findElement(By.id("id_hotel_button"));
+        buttonPozadovanyHotel.click();
+        WebElement vyberHotel = prohlizec.findElement(By.xpath("//li[@class = 'search_result_li']"));
+        vyberHotel.click();
+        WebElement tlacitkoDatumPrijezdu = prohlizec.findElement(By.id("check_in_time"));
+        tlacitkoDatumPrijezdu.click();
+        WebElement tlacitkoDatumPrijezdu22 = prohlizec.findElement(By.xpath("/html/body/div[2]/table/tbody/tr[4]/td[6]/a"));
+        tlacitkoDatumPrijezdu22.click();
+        WebElement tlacitkoDatumOdjezdu29 = prohlizec.findElement(By.xpath("/html/body/div[2]/table/tbody/tr[5]/td[6]/a"));
+        tlacitkoDatumOdjezdu29.click();
+        WebElement tlacitkoSearchNow = prohlizec.findElement(By.cssSelector(".button.button-medium.exclusive"));
+        tlacitkoSearchNow.click();
 
+        Assertions.assertNotEquals(prohlizec.getCurrentUrl(), "http://czechitas-datestovani-hackathon.cz/en/");
+    }
+
+    @Test
+    public void testZabezpeceni () {
+        prohlizec.navigate().to("http://czechitas-datestovani-hackathon.cz/cs/");
+        String securePageUrl = "https://czechitas-datestovani-hackathon.cz/cs/";
+        Assertions.assertEquals(prohlizec.getCurrentUrl(), securePageUrl);
+    }
+
+    public void prihlaseniExistujicihoUzivatele(String email, String heslo){
         prohlizec.navigate().to("http://czechitas-datestovani-hackathon.cz/en/");
         WebElement tlacitkoSignIn = prohlizec.findElement(By.className("hide_xs"));
         tlacitkoSignIn.click();
